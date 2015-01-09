@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+from django.core.mail import send_mail
+
 __author__ = 'Yun'
 __project__ = 'DjangoBookTest'
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response
 import datetime
 from books.models import Book
@@ -67,22 +69,26 @@ def search_form(request):
     return render_to_response('search_form.html')
 
 
-def search(request):
-    error = False
-    if request.GET.get('q') and request.GET['q']:
-        q = request.GET['q']
-        if q is None:
-            error = True
-        else:
-            books = Book.objects.filter(title__icontains=q)
-            return render_to_response('search_results.html', {'books': books, 'query': q})
-    message = 'Please submit a search term.'
-    return render_to_response('search_form.html', {'error': error, 'message': message})
-    # message = 'You searched for: {}'.format(request.GET['q'])
-    # return HttpResponse(message)
-
-
 def display_get(request):
     # values = request.GET
     value = type(request.GET['q'])
     return render_to_response('display_get.html', {'value': value, 'variable': 'q'})
+
+
+def display_post(request):
+    values = request.POST
+    return render_to_response('display_post.html', {'values': values, })
+
+
+def search(request):
+    errors = []
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if not q:
+            errors.append('Enter a search term.')
+        elif len(q) > 10:
+            errors.append('Please enter at most 10 characters.')
+        else:
+            books = Book.objects.filter(title__icontains=q)
+            return render_to_response('search_results.html', {'books': books, 'query': q})
+    return render_to_response('search_form.html', {'errors': errors, })

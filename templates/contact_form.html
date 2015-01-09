@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Contact us
+{% endblock %}
+
+{% block content %}
+    <h1>Contact us</h1>
+
+{#    {% if errors %}#}
+{#        <ul style="color: red">#}
+{#            {% for error in errors %}#}
+{#                <li>{{ error }}</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    {% endif %}#}
+
+{#    <form action="/contact/" method="post">#}
+{#        <table>#}
+{#            <tr>#}
+{#                <td>Subject:</td><td><input type="text" name="subject" value="{{ subject }}"></td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td>Your e-mail(optional): </td><td><input type="text" name="email" value="{{ email }}"></td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td>Message: </td><td><textarea name="message" rows="10" cols="50">{{ message }}</textarea></td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td></td><td align="right"><input type="submit" value="Submit"></td>#}
+{#            </tr>#}
+{#        </table>#}
+{#    </form>#}
+
+{#    <form action="" method="post">#}
+{#        <table>#}
+{#            {{ form.as_table }}#}
+{#            <td></td><td align="right"><input type="submit" value="Submit"></td>#}
+{#        </table>#}
+{#    </form>#}
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="post">
+        <div class="field">
+            {{ form.subject.errors }}
+            <label for="id_subject">Subject:</label>
+            {{ form.subject }}
+        </div>
+        <div class="field">
+            {{ form.email.errors }}
+            <label for="id_email">Your e-mail:</label>
+            {{ form.email }}
+        </div>
+        <div class="field">
+            {{ form.message.errors }}
+            <label for="id_subject">Message:</label>
+            {{ form.message }}
+        </div>
+        <div align="right">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+
+{% endblock %}

@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from DjangoBookTest.views import hello
+# from DjangoBookTest.views import hello
 import DjangoBookTest.views
+import contact.views
 
 urlpatterns = patterns('',
     # Examples:
@@ -18,4 +20,14 @@ urlpatterns = patterns('',
     url(r'^search/$', DjangoBookTest.views.search),
     url(r'^search_results/$', DjangoBookTest.views.search),
     url(r'^get/$', DjangoBookTest.views.display_get),
+    url(r'^contact/$', contact.views.contact),
+    url(r'^post/$', 'DjangoBookTest.views.display_post'),
 )
+
+urlpatterns += patterns('contact.views',
+    url(r'^contact/$', 'contact'),
+)
+
+
+if settings.DEBUG:
+    urlpatterns += patterns('', (r'debuginfo/$', DjangoBookTest.views.debug))
