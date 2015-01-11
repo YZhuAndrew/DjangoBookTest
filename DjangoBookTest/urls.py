@@ -28,6 +28,11 @@ urlpatterns += patterns('contact.views',
     url(r'^contact/$', 'contact'),
 )
 
+urlpatterns += patterns('DjangoBookTest.views',
+    url(r'^sells/$', 'sells', {'quantity': '?', 'item': '?', 'price': '?'}),
+    url(r'^sells/(?P<quantity>\d*)/(?P<item>\w*)/(?P<price>\d*)/$', 'sells'),
+)
 
-if settings.DEBUG:
-    urlpatterns += patterns('', (r'debuginfo/$', DjangoBookTest.views.debug))
+
+# if settings.DEBUG:
+#     urlpatterns += patterns('', (r'debuginfo/$', DjangoBookTest.views.debug))

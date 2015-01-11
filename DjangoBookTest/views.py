@@ -92,3 +92,7 @@ def search(request):
             books = Book.objects.filter(title__icontains=q)
             return render_to_response('search_results.html', {'books': books, 'query': q})
     return render_to_response('search_form.html', {'errors': errors, })
+
+
+def sells(request, item, price, quantity, template_name='display_sells.html'):
+    return render_to_response(template_name, {'item': item, 'price': price, 'quantity': quantity})
